@@ -1,0 +1,22 @@
+meta {
+  name: test post
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/events
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "ID": 1,
+    "Name": "Test Name",
+    "Description" : "test",
+    "Location": "test",
+    "DateTime": "2025-11-11T11:11:11.000Z"  ,
+    "UserID":  1
+  }
+}
