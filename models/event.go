@@ -74,3 +74,19 @@ func GetAllEvents() ([]Event, error) {
 	defer rows.Close()
 	return events, nil
 }
+//Event itself can't be null but a POINTER to an event can
+func GetEventByID(id int64) (*Event, error) {
+	query := "SELECT * FROM events WHERE id = ?"
+
+	//God for 1 to 1
+	row := db.DB.QueryRow(query, id)
+
+	var event Event
+	err := row.Scan(&event.ID, &event.Name,&event.Description,&event.Location, &event.DateTime, &event.UserID)
+
+	if err != nil {
+		return nil ,err
+	}
+
+	return &event, nil
+}
