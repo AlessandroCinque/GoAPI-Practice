@@ -10,9 +10,12 @@ post {
   auth: inherit
 }
 
+headers {
+  timeout: 5000
+}
+
 body:json {
   {
-    "ID": 1,
     "Name": "Test Name",
     "Description" : "test",
     "Location": "test",
