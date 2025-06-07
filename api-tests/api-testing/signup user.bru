@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/events
+  url: http://localhost:8080/signup
   body: json
   auth: inherit
 }
@@ -16,10 +16,7 @@ headers {
 
 body:json {
   {
-    "Name": "Test Name",
-    "Description" : "test",
-    "Location": "test",
-    "DateTime": "2025-11-11T11:11:11.000Z"  ,
-    "UserID":  1
+    "Email": "test2@test.org",
+    "password": "test2"
   }
 }
