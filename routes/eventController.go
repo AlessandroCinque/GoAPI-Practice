@@ -1,10 +1,12 @@
 package routes
 
-import(
+import (
 	"fmt"
 	"net/http"
 	"strconv"
+
 	"github.com/AlessandroCinque/GoAPI-Practice/models"
+	"github.com/AlessandroCinque/GoAPI-Practice/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -40,9 +42,24 @@ func GetEvents(context *gin.Context) {
 
 func CreateEvent(context *gin.Context) {
 
+	token := context.Request.Header.Get("Authorization")
+
+	if token == "" {
+
+		context.JSON(http.StatusUnauthorized, gin.H{"message":"Not authorised"})
+		return
+	}
+
+	err := utils.VerifyToken(token)
+
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"message":"Not authorised"})
+		return
+	}
+
 	var event models.Event
 
-	err := context.ShouldBindBodyWithJSON(&event)
+	err = context.ShouldBindBodyWithJSON(&event)
 
 	if err != nil {
 		fmt.Println(err)
