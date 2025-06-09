@@ -43,7 +43,9 @@ func (u User) Save() error {
 	return err
 }
 
-func (u User) ValidateCredentials() error {
+
+//The pointer "*" in here is required, so that we update the actual user not a copy of it
+func (u *User) ValidateCredentials() error {
 	query := "SELECT id, password FROM users WHERE email = ?"
 	row := db.DB.QueryRow(query, u.Email)
 

@@ -12,13 +12,14 @@ type Event struct {
 	Description string		`binding:"required"`
 	Location    string		`binding:"required"`
 	DateTime    time.Time	`binding:"required"`
-	UserID		int
+	UserID		int64
 
 }
 
 var events = []Event{}
 
-func (e Event) Save() error {
+//The pointer "*" in here is required, so that we update the actual user not a copy of it
+func (e *Event) Save() error {
 
 	query := `INSERT INTO events(name,description,location, dateTime, user_id)
 	VALUES(?,?,?,?,?)`
