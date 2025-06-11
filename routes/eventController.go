@@ -53,7 +53,6 @@ func CreateEvent(context *gin.Context) {
 		return
 	}
 
-	event.ID = 1
 	
 	event.UserID = context.GetInt64("userId")
 
@@ -73,12 +72,22 @@ func UpdateEvent(context *gin.Context) {
 		return
 	}
 
-	_, err = models.GetEventByID(eventId)
+	userId := context.GetInt64("userId")
+	event , err := models.GetEventByID(eventId)
+
+	if event.UserID != userId {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "You don't have the permission to chnage this event"})
+
+		return
+	}
+	
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message":"Could not fetch the event"})
 		return
 	}
+
+
 
 	var updatedEvent models.Event
 	err = context.ShouldBindBodyWithJSON(&updatedEvent)
@@ -109,6 +118,14 @@ func DeleteEvent(context *gin.Context) {
 	}
 
 	event, err := models.GetEventByID(eventId)
+
+	userId := context.GetInt64("userId")
+
+	if event.UserID != userId {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "You don't have the permission to chnage this event"})
+
+		return
+	}
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message":"Could not fetch the event"})
