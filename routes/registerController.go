@@ -10,36 +10,36 @@ import (
 
 func registerForEvent(context *gin.Context) {
 	userId := context.GetInt64("userId")
-	eventId, err := strconv.ParseInt(context.Param("id"),10, 64)
+	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message":"Could not parse event Id"})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse event Id"})
 		return
 	}
 
 	event, err := modelsWithDBQueries.GetEventByID(eventId)
 
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"message":"Could not fetch event."})
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not fetch event."})
 		return
 	}
 
 	err = event.Register(userId)
 
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"message":"Could not register event."})
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not register event."})
 		return
 	}
 
-	context.JSON(http.StatusOK,  gin.H{"message":"Event registered."})
+	context.JSON(http.StatusOK, gin.H{"message": "Event registered."})
 }
 
 func cancelRegistration(context *gin.Context) {
 	userId := context.GetInt64("userId")
-	eventId, err := strconv.ParseInt(context.Param("id"),10, 64)
+	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message":"Could not parse event Id"})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse event Id"})
 		return
 	}
 
@@ -49,9 +49,9 @@ func cancelRegistration(context *gin.Context) {
 	err = event.CancelRegistration(userId)
 
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"message":"Could not delete registration."})
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not delete registration."})
 		return
 	}
 
-	context.JSON(http.StatusOK,  gin.H{"message":"Registration cancelled."})
+	context.JSON(http.StatusOK, gin.H{"message": "Registration cancelled."})
 }
