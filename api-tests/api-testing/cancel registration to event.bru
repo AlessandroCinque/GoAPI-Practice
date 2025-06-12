@@ -1,0 +1,16 @@
+meta {
+  name: cancel registration to event
+  type: http
+  seq: 10
+}
+
+delete {
+  url: http://localhost:8080/events/1/register
+  body: json
+  auth: inherit
+}
+
+headers {
+  timeout: 5000
+  Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlczF0QHRlc3Qub3JnIiwiZXhwIjoxNzQ5NzU5MzMyLCJ1c2VySWQiOjJ9.QDG-hdAySuylALeehgGi1BKRwe7f4BUN0HfuXQ23YAE
+}
