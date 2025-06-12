@@ -1,0 +1,25 @@
+meta {
+  name: createEvent
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/events
+  body: json
+  auth: inherit
+}
+
+headers {
+  timeout: 5000
+  Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5vcmciLCJleHAiOjE3NDk3NTkyMzQsInVzZXJJZCI6MX0.flBgDLMW0FkPJh57NPRLLRwDYoxLbRL4C7XUG29N9wQ
+}
+
+body:json {
+  {
+    "Name": "Test Name",
+    "Description" : "test",
+    "Location": "test",
+    "DateTime": "2025-11-11T11:11:11.000Z"
+  }
+}

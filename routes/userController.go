@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/AlessandroCinque/GoAPI-Practice/models"
+	"github.com/AlessandroCinque/GoAPI-Practice/modelsWithDBQueries"
 	"github.com/AlessandroCinque/GoAPI-Practice/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func Signup(context *gin.Context) {
 
-	var user models.User
+	var user modelsWithDBQueries.User
 
 	err := context.ShouldBindJSON(&user)
 
@@ -35,7 +35,7 @@ func Signup(context *gin.Context) {
 
 func Login(context *gin.Context) {
 
-	var user models.User
+	var user modelsWithDBQueries.User
 	err := context.ShouldBindJSON(&user)
 
 	if err != nil {

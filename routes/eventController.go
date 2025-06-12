@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/AlessandroCinque/GoAPI-Practice/models"
+	"github.com/AlessandroCinque/GoAPI-Practice/modelsWithDBQueries"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,7 +17,7 @@ func GetEvent(context *gin.Context) {
 		return
 	}
 
-	event, err := models.GetEventByID(eventId)
+	event, err := modelsWithDBQueries.GetEventByID(eventId)
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Culd not fetch events. 500"})
@@ -28,7 +28,7 @@ func GetEvent(context *gin.Context) {
 }
 
 func GetEvents(context *gin.Context) {
-	events, err := models.GetAllEvents()
+	events, err := modelsWithDBQueries.GetAllEvents()
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "Culd not fetch events. 500"})
@@ -43,7 +43,7 @@ func CreateEvent(context *gin.Context) {
 
 	//middleware.Authenticate(context)
 
-	var event models.Event
+	var event modelsWithDBQueries.Event
 
 	err := context.ShouldBindBodyWithJSON(&event)
 
@@ -73,7 +73,7 @@ func UpdateEvent(context *gin.Context) {
 	}
 
 	userId := context.GetInt64("userId")
-	event , err := models.GetEventByID(eventId)
+	event , err := modelsWithDBQueries.GetEventByID(eventId)
 
 	if event.UserID != userId {
 		context.JSON(http.StatusUnauthorized, gin.H{"message": "You don't have the permission to chnage this event"})
@@ -89,7 +89,7 @@ func UpdateEvent(context *gin.Context) {
 
 
 
-	var updatedEvent models.Event
+	var updatedEvent modelsWithDBQueries.Event
 	err = context.ShouldBindBodyWithJSON(&updatedEvent)
 
 	if err != nil {
@@ -117,7 +117,7 @@ func DeleteEvent(context *gin.Context) {
 		return
 	}
 
-	event, err := models.GetEventByID(eventId)
+	event, err := modelsWithDBQueries.GetEventByID(eventId)
 
 	userId := context.GetInt64("userId")
 
